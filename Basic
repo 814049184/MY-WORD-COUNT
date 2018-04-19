@@ -1,0 +1,89 @@
+#include<iostream>
+#include<Windows.h>
+#include<string>
+#include<fstream> 
+#include<assert.h>
+#include<cctype>
+using namespace std;
+
+class para
+{
+private:
+	int chars;
+	int words;
+	int sentences;
+	int lines;
+public:
+	void count(int c, int w, int s,int l) 
+	{
+		chars = c;
+		words = w;
+		sentences = s;
+		lines = l;
+	}
+	void countl(int l) { lines = l; }
+	void showchar() { cout << "字符数为"<<chars<<endl; }
+	void showword() { cout << "单词数为"<<words<<endl; }
+	void showsent() { cout << "句子数为"<<sentences << endl; }
+	void showline() { cout << "行数为"<<lines << endl; }
+};
+
+int main()
+{
+	string data,filename;
+	para a;
+
+	ifstream infile;
+	cout << "请输入文件名:";
+	cin >> filename;
+	infile.open(filename.c_str(),ios::in);
+	//assert(infile.is_open());//保证程序正确打开
+	if (!infile.is_open())
+		cout << "文件读取失败" << endl;
+	else
+	{
+		int  c = 0, w = 0, s = 0, l = 0;
+		while (getline(infile, data))//按行输入文本
+		{
+			int len = data.length();
+			int i = 0;
+			//cout << len << endl; //测试文本读入是否正常
+			while (i < len)
+			{
+				c++;
+				if (!isalpha(data[i]) && (isalpha(data[i + 1])|| isalpha(data[i - 1])))//不考虑连字符单词等特殊单词
+					w++;
+				if (data[i] == '.' || data[i] == '?' || data[i] == '!')//以！/。/？为句子结尾
+					s++;
+				//cout << data[i];
+				i++;
+			}
+			l++;
+		}
+		a.count(c, w, s, l);
+		cout << "请输入您的指令：" << endl;
+		string com;
+		cin >> com;
+		while (!com.empty())
+		{
+			//assert(!com.empty());
+			switch (com[1])
+			{
+			case'w':a.showword(); break;
+			case'c':a.showchar(); break;
+			case's':a.showsent(); break;
+			case'l':a.showline(); break;
+			case'e':infile.close(); return 0;
+			default:cout << "指令错误，请重新输出" << endl;
+				break;
+			}
+			com[1] = '\0';
+			cin.ignore();
+			cout << "如使用完毕，请输出-end关闭程序" << endl;
+			cout << "请输入您的指令：" << endl;
+			cin >> com;
+		}
+		infile.close();
+	}
+	return 0;
+}
