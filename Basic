@@ -20,7 +20,6 @@ public:
 		sentences = s;
 
 	}
-	void countl(int l) { lines = l; }
 	void showchar() { cout << "字符数为"<<chars<<endl; }
 	void showword() { cout << "单词数为"<<words<<endl; }
 	void showsent() { cout << "句子数为"<<sentences << endl; }
