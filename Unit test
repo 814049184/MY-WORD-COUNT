@@ -1,0 +1,48 @@
+#include "stdafx.h"
+#include "CppUnitTest.h"
+#include<string>
+#include<iostream>
+#include<fstream> 
+wc.exe -s unit_test.txt
+
+std::string a = "empty_test.txt";
+std::string a1 = "unit_test.txt";
+std::string a2 = "unit_test1.txt";
+std::string a3 = "tl_test.txt";
+std::string b = "-s";
+std::string b1 = "-w";
+std::string b2 = "-l";
+std::string b3 = "-c";
+extern int wordcount(std::string filename, std::string com);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace UnitTest1
+{		
+	TEST_CLASS(UnitTest1)
+	{
+	public:
+		
+		TEST_METHOD(TestMethod1)
+		{
+			Assert::IsTrue(wordcount(a, b) == 0);
+			Assert::IsTrue(wordcount(a, b1) == 0);
+			Assert::IsTrue(wordcount(a, b2) == 0);
+			Assert::IsTrue(wordcount(a, b3) == 0);
+			Assert::IsTrue(wordcount(a1, b) == 1);
+			Assert::IsTrue(wordcount(a1, b1) == 15);
+			Assert::IsTrue(wordcount(a1, b2) == 1);
+			Assert::IsTrue(wordcount(a1, b3) == 71);
+			Assert::IsTrue(wordcount(a2, b) == 7);
+			Assert::IsTrue(wordcount(a2, b1) == 78);
+			Assert::IsTrue(wordcount(a2, b2) == 3);
+			Assert::IsTrue(wordcount(a2, b3) == 344);
+			Assert::IsTrue(wordcount(a3, b) == 4);
+			Assert::IsTrue(wordcount(a3, b1) == 12);
+			Assert::IsTrue(wordcount(a3, b2) == 3);
+			Assert::IsTrue(wordcount(a3, b3) == 42);
+
+			// TODO: 在此输入测试代码
+		}
+
+	};
+}
